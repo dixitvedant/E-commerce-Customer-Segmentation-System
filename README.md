@@ -1,5 +1,5 @@
 🛒 SmartCart: AI-Powered Customer Segmentation
-Live Application: [Link to your Streamlit App]
+Live Application: https://e-commerce-customer-segmentation-systemgit-qcc6eblw3h86qjkinpo.streamlit.app/
 
 Built with: Python, Scikit-Learn, Streamlit, and PCA.
 
