@@ -228,6 +228,7 @@ if uploaded_file is not None:
         fig_eval.patch.set_facecolor('#05070a')
         ax1.set_facecolor('#05070a')
         ax1.plot(k_range, wcss, marker='o', color='#00d4ff', linewidth=3, markersize=8)
+        ax1.set_xlabel("K Value(Cluster)", color='#00d4ff')
         ax1.set_ylabel("Inertia (WCSS)", color='#00d4ff')
         ax1.set_title("Elbow Method and Silhouette score")
         ax2 = ax1.twinx()
