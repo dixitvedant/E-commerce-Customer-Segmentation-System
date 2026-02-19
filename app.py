@@ -12,12 +12,10 @@ from sklearn.decomposition import PCA
 from sklearn.metrics import silhouette_score
 from sklearn.impute import SimpleImputer
 
-# ======================================================
-# PAGE CONFIGURATION & PREMIUM THEME
-# ======================================================
-st.set_page_config(page_title="SmartCart AI | Enterprise Analytics", layout="wide", page_icon="🚀")
+# PAGE CONFIGURATION
+st.set_page_config(page_title="SmartCart AI | Enterprise Analytics", layout="wide")
 
-# Ultra-Premium CSS with Animations
+#CSS with
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
@@ -90,7 +88,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# Impressive Hero Header
+#Header
 st.markdown("""
     <div class="hero-container">
         <p class="hero-title">SMARTCART AI</p>
@@ -98,7 +96,7 @@ st.markdown("""
     </div>
     """, unsafe_allow_html=True)
 
-# Sidebar UI
+# Sidebar 
 with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/2103/2103633.png", width=100)
     st.title("Control Center")
@@ -110,9 +108,7 @@ with st.sidebar:
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     
-    # ======================================================
     # DATA PREPROCESSING (Notebook Logic)
-    # ======================================================
     # Handle Missing Values
     if "Income" in df.columns:
         df["Income"] = df["Income"].fillna(df["Income"].median())
@@ -153,13 +149,13 @@ if uploaded_file is not None:
     if "Income" in df_cleaned.columns:
         df_cleaned["Income"] = pd.to_numeric(df_cleaned["Income"], errors="coerce")
     
-    # Remove Outliers (Crucial Notebook Logic)
+    # Remove Outliers
     if "Age" in df_cleaned.columns:
         df_cleaned = df_cleaned[df_cleaned["Age"] < 90]
     if "Income" in df_cleaned.columns:
         df_cleaned = df_cleaned[df_cleaned["Income"] < 600000]
     
-    # Synchronize original df with cleaned df for visualization
+
     df = df.loc[df_cleaned.index]
 
     # KPIs
@@ -168,10 +164,9 @@ if uploaded_file is not None:
     with kpi2: st.metric("Features(CLEANED)", len(df_cleaned.columns))
     with kpi3: st.metric("Engine(ML ALGORITHM)", "KMeans+Agg")
     with kpi4: st.metric("Clusters", k_selected)
-
-    # ======================================================
+        
     # ML PIPELINE (PCA & KMeans)
-    # ======================================================
+
     # One-Hot Encoding
     cat_cols = ["Education", "Living_with"]
     cat_cols_exist = [c for c in cat_cols if c in df_cleaned.columns]
@@ -198,11 +193,12 @@ if uploaded_file is not None:
     kmeans = KMeans(n_clusters=k_selected, random_state=42, n_init=20)
     df["Cluster"] = kmeans.fit_predict(X_pca)
     df_encoded["Cluster"] = df["Cluster"]
+        
     #Clustering(AgglomerativeClustering)
     agg = AgglomerativeClustering(n_clusters=k_selected)
     df["Agg_Cluster"] = agg.fit_predict(X_pca)
 
-    # Premium Color Palette
+    # Color Palette
     custom_colors = ['#00d4ff', '#ff007f', '#7cfc00', '#ffea00', '#9d50bb', '#ff8c00', '#00ffa3', '#ff0000', '#ffffff', '#607d8b']
     cmap_custom = ListedColormap(custom_colors[:k_selected])
 
@@ -296,8 +292,6 @@ if uploaded_file is not None:
         summary = df.groupby("Cluster").mean(numeric_only=True)
         
        # Ensure 'Living_with' is included in your summary logic before the loop:
-        # summary = df.groupby("Cluster").agg({ ... 'Living_with': lambda x: x.mode()[0], ... })
-
         for i in range(k_selected):
             row = summary.loc[i]
             cluster_color = custom_colors[i]
@@ -321,9 +315,9 @@ if uploaded_file is not None:
                         <div>
                             <p style="color:#ff007f; font-weight:bold; margin-bottom:5px;">HOUSEHOLD & CHANNELS</p>
                             <p style="font-size:16px; margin:0; color:#fff; font-weight:bold;">Status: {living_status}</p>
-                            <p style="font-size:15px; margin:0;">🌐 Web: {row.get('NumWebPurchases', 0):.1f}</p>
-                            <p style="font-size:15px; margin:0;">📖 Catalog: {row.get('NumCatalogPurchases', 0):.1f}</p>
-                            <p style="font-size:15px; margin:0;">🏬 Store: {row.get('NumStorePurchases', 0):.1f}</p>
+                            <p style="font-size:15px; margin:0;">Web: {row.get('NumWebPurchases', 0):.1f}</p>
+                            <p style="font-size:15px; margin:0;">Catalog: {row.get('NumCatalogPurchases', 0):.1f}</p>
+                            <p style="font-size:15px; margin:0;">Store: {row.get('NumStorePurchases', 0):.1f}</p>
                         </div>
                         <div>
                             <p style="color:#7cfc00; font-weight:bold; margin-bottom:5px;">ENGAGEMENT</p>
@@ -334,7 +328,7 @@ if uploaded_file is not None:
                 </div>
             """, unsafe_allow_html=True)
 
-            # --- ADVANCED DYNAMIC STRATEGY LOGIC ---
+            # STRATEGY LOGIC
             s1, s2 = st.columns(2)
             avg_spend = summary['Total_spendings'].mean()
             avg_income = summary['Income'].mean()
