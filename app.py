@@ -229,6 +229,7 @@ if uploaded_file is not None:
         ax1.set_facecolor('#05070a')
         ax1.plot(k_range, wcss, marker='o', color='#00d4ff', linewidth=3, markersize=8)
         ax1.set_ylabel("Inertia (WCSS)", color='#00d4ff')
+        ax1.set_title("Elbow Method and Silhouette score")
         ax2 = ax1.twinx()
         ax2.plot(k_range, sil_scores, marker='s', color='#ff007f', linewidth=3, markersize=8)
         ax2.set_ylabel("Silhouette Score", color='#ff007f')
